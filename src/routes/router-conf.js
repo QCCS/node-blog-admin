@@ -113,6 +113,7 @@ let list = {
         openState: 'tagNav',
         children: {
             TagListLink: {
+                level:1,
                 component: <TagList/>,
                 link: 'TagList',
                 name: '标签列表',
@@ -131,6 +132,7 @@ let list = {
         openState: 'commentNav',
         children: {
             CommentListLink: {
+                level:1,
                 component: <CommentList/>,
                 link: 'CommentListLink',
                 name: '评论列表',
@@ -149,6 +151,7 @@ let list = {
         openState: 'userNav',
         children: {
             UserListLink: {
+                level:1,
                 component: <UserList/>,
                 link: 'UserList',
                 name: '用户列表',
@@ -156,6 +159,7 @@ let list = {
                 icon: <CakeSharpIcon></CakeSharpIcon>
             },
             RoleListLink: {
+                level:1,
                 component: <RoleList/>,
                 link: 'RoleList',
                 name: '角色列表',
@@ -163,6 +167,7 @@ let list = {
                 icon: <ListIcon></ListIcon>
             },
             PermissionListLink: {
+                level:1,
                 component: <PermissionList/>,
                 link: 'PermissionList',
                 name: '权限列表',
