@@ -8,7 +8,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import {createPost} from '../../../service/post-api';
 import BraftEditor from 'braft-editor';
-import 'braft-editor/dist/index.css'
+import 'braft-editor/dist/index.css';
+import Input from '@material-ui/core/Input';
 const styles = theme => ({
     root: {
         display: 'flex',
@@ -92,6 +93,7 @@ class PostList extends React.Component {
             <TextField
                 id="outlined-name"
                 label="描述"
+                multiline={true}
                 value={this.state.desc}
                 onChange={this.handleChange('desc')}
                 margin="normal"
@@ -107,6 +109,7 @@ class PostList extends React.Component {
                 variant="outlined"
             />
             <br/>
+
             <div className="editor-wrap">
                 <BraftEditor
                     value={this.state.editorState}

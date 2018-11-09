@@ -26,7 +26,14 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Slide from '@material-ui/core/Slide';
 import CloseIcon from '@material-ui/icons/Close';
-
+import Avatar from '@material-ui/core/Avatar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import {connect} from 'react-redux';
 import actions from '../../redux/action';
@@ -58,14 +65,6 @@ const styles = theme => ({
             display: 'block',
         },
     },
-    paper: {
-        zIndex: 1,
-        position: 'relative',
-        margin: '0 auto',
-        width: 400,
-        height: 400,
-        textAlign: 'center'
-    },
     paperInner: {},
 
     inputRoot: {
@@ -94,6 +93,35 @@ const styles = theme => ({
         [theme.breakpoints.up('md')]: {
             display: 'none',
         },
+    },
+    main: {
+        width: 'auto',
+        display: 'block', // Fix IE 11 issue.
+        marginLeft: theme.spacing.unit * 3,
+        marginRight: theme.spacing.unit * 3,
+        [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+            width: 400,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+        },
+    },
+    paper: {
+        marginTop: theme.spacing.unit * 8,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+    },
+    avatar: {
+        margin: theme.spacing.unit,
+        backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing.unit,
+    },
+    submit: {
+        marginTop: theme.spacing.unit * 3,
     },
 });
 
@@ -282,24 +310,81 @@ class HeaderContent extends React.Component {
 
 
                     <Slide direction="up" in={checkedPhone} mountOnEnter unmountOnExit>
-                        <Paper elevation={2} className={classes.paper}>
-                            <div className={classes.paperInner}>Phone</div>
 
-                            <div className="mobile-input-wrap">
-                                <h1>mobile</h1>
-                                <input onChange={(e) => {
-                                    this.onPhoneChange(e)
-                                }}/>
-                            </div>
-                            <div className="password-input-wrap">
-                                <h1>password</h1>
-                                <input onChange={(e) => {
-                                    this.onPasswordChange(e)
-                                }}/>
-                            </div>
 
-                            <div onClick={this.loginAction} className="mobile-password-login-btn">登陆</div>
-                        </Paper>
+                        <main className={classes.main}>
+                            <CssBaseline />
+                            <Paper className={classes.paper}>
+                                <Avatar className={classes.avatar}>
+                                    <LockIcon />
+                                </Avatar>
+                                <Typography component="h1" variant="h5">
+                                    登录
+                                </Typography>
+                                <form className={classes.form}>
+                                    <FormControl margin="normal" required fullWidth className="mobile-input-wrap">
+                                        <InputLabel htmlFor="email">电话号码</InputLabel>
+                                        <Input id="mobile" name="mobile"
+                                               autoComplete="mobile"
+                                               onChange={(e) => {
+                                                   this.onPhoneChange(e)
+                                               }}
+                                               autoFocus />
+                                    </FormControl>
+                                    <FormControl margin="normal" required fullWidth  className="password-input-wrap">
+                                        <InputLabel htmlFor="password">密码</InputLabel>
+                                        <Input name="password"
+                                               onChange={(e) => {
+                                                   this.onPasswordChange(e)
+                                               }}
+                                               type="password"
+                                               id="password"
+                                               autoComplete="current-password" />
+                                    </FormControl>
+                                    <FormControlLabel
+                                        control={<Checkbox value="remember" color="primary" />}
+                                        label="记住我"
+                                    />
+                                    <Button
+                                        type="submit"
+                                        fullWidth
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={this.loginAction}
+                                        className={classes.submit+" mobile-password-login-btn"}
+                                    >
+                                    登录
+                                    </Button>
+                                </form>
+                            </Paper>
+                        </main>
+
+
+                        {/*<Paper elevation={2} className={classes.paper}>*/}
+                            {/*<div className={classes.paperInner}>Phone</div>*/}
+
+                            {/*<div className="mobile-input-wrap">*/}
+                                {/*<h1>mobile</h1>*/}
+                                {/*<input onChange={(e) => {*/}
+                                    {/*this.onPhoneChange(e)*/}
+                                {/*}}/>*/}
+                            {/*</div>*/}
+                            {/*<div className="password-input-wrap">*/}
+                                {/*<h1>password</h1>*/}
+                                {/*<input onChange={(e) => {*/}
+                                    {/*this.onPasswordChange(e)*/}
+                                {/*}}/>*/}
+                            {/*</div>*/}
+
+                            {/*<div onClick={this.loginAction} className="mobile-password-login-btn">登陆</div>*/}
+                        {/*</Paper>*/}
+
+
+
+
+
+
+
                     </Slide>
                     <Slide direction="up" in={checkedEmail} mountOnEnter unmountOnExit>
                         <Paper elevation={4} className={classes.paper}>
@@ -316,7 +401,7 @@ class HeaderContent extends React.Component {
                                         color="inherit" aria-label="Open drawer">
                                 <MenuIcon/>
                             </IconButton>
-                            Node Blog Manage System
+                            博客管理系统
                         </Typography>
 
                         <div className={classes.grow}/>

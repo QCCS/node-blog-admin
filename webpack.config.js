@@ -1,6 +1,9 @@
 const webpack = require("webpack");
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const copyWebpackPlugin = require('copy-webpack-plugin');
+//z直接引入markdown文件
+const marked = require("marked");
+const renderer = new marked.Renderer();
 //分离css
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -66,6 +69,21 @@ module.exports = {
     mode:'development',
     module: {
         rules: [
+            {
+                test: /\.md$/,
+                use: [
+                    {
+                        loader: "html-loader"
+                    },
+                    {
+                        loader: "markdown-loader",
+                        options: {
+                            pedantic: true,
+                            renderer
+                        }
+                    }
+                ]
+            },
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,

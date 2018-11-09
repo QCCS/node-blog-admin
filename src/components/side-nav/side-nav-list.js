@@ -17,6 +17,7 @@ import routeConf from '../../routes/router-conf';
 import '../../styles/components/side-nav/side-nav-list.scss';
 import {connect} from 'react-redux';
 import actions from '../../redux/action';
+
 const styles = theme => ({
     root: {
         width: '100%',
@@ -25,16 +26,15 @@ const styles = theme => ({
         backgroundColor: theme.palette.background.paper,
     },
     nested: {
-        paddingLeft: theme.spacing.unit * 2,
+        paddingLeft: theme.spacing.unit * 3,
     },
     unnested: {
-        paddingLeft: theme.spacing.unit * 0,
+        paddingLeft: theme.spacing.unit * 2,
     },
 });
 
 class SideNavList extends React.Component {
-    state = {
-    };
+    state = {};
     handleClickList = (stateName) => {
         this.props.onButtonShowSideNav();
         let state = this.state;
@@ -42,35 +42,46 @@ class SideNavList extends React.Component {
         this.setState(state);
     };
     //渲染菜单
-    renderNavList = (route,that) => {
-        const {match,classes} = this.props;
+    renderNavList = (route, that) => {
+        const {match, classes} = this.props;
         return (<List component="nav">
             {_getListItem(route)}
         </List>);
+
         function _getListItem(route) {
             let navArr = [];
             for (let key in route) {
                 if (!route[key].children) {
                     navArr.push(_getItemByKey(route[key]));
                 } else {
-                    navArr.push(_getItemNoLink(route[key],route[key].openStateFun,route[key].openState));
-                    navArr.push(_getItemChildren(route[key].children,route[key].openState,true));
+                    navArr.push(_getItemNoLink(route[key], route[key].openStateFun, route[key].openState));
+                    navArr.push(_getItemChildren(route[key].children, route[key].openState, true));
                 }
             }
             return navArr;
         }
+
         function _getItemByKey(nav) {
             let link = props => <Link to={`${match.url}/${nav['link']}`} {...props} />;
-            return (<ListItem button component={link} className="nav-item" onClick={that.props.onButtonShowSideNav}>
+            let className = nav.level ? classes.nested + ' nav-item' : classes.unnested + ' nav-item';
+            console.log(nav)
+            console.log(className)
+            return (<ListItem
+                button component={link}
+                className={className}
+                onClick={that.props.onButtonShowSideNav}>
                 <ListItemIcon>
                     {nav['icon']}
                 </ListItemIcon>
                 <ListItemText inset primary={nav['name']}/>
             </ListItem>);
         }
-        function _getItemNoLink(nav,openStateFun,openState) {
+
+        function _getItemNoLink(nav, openStateFun, openState) {
             return (
-                <ListItem button onClick={()=>{that[openStateFun](openState);}} className={'nav-item '+openState+'item'}>
+                <ListItem button onClick={() => {
+                    that[openStateFun](openState);
+                }} className={classes.unnested + ' nav-item ' + openState + 'item'}>
                     <ListItemIcon>
                         {nav['icon']}
                     </ListItemIcon>
@@ -79,10 +90,11 @@ class SideNavList extends React.Component {
                 </ListItem>
             );
         }
-        function _getItemChildren(route,openState) {
+
+        function _getItemChildren(route, openState) {
             return (
                 <Collapse in={that.state[openState]} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding className={classes.nested}>
+                    <List component="div" disablePadding>
                         {_getListItem(route)}
                     </List>
                 </Collapse>
@@ -95,7 +107,7 @@ class SideNavList extends React.Component {
         const HomeLink = props => <Link exact to={'/'} {...props} />;
         const AboutLink = props => <Link exact to={'/about'} {...props} />;
         return (
-            <div className={classes.root +' side-nav-list-wrap'}>
+            <div className={classes.root + ' side-nav-list-wrap'}>
                 <List component="nav">
                     <ListItem button component={HomeLink} className="nav-item">
                         <ListItemIcon>
@@ -104,7 +116,7 @@ class SideNavList extends React.Component {
                         <ListItemText inset primary="首页"/>
                     </ListItem>
                 </List>
-                {this.renderNavList(routeConf.list,this)}
+                {this.renderNavList(routeConf.list, this)}
                 <List component="nav">
                     <ListItem button component={AboutLink} className="nav-item">
                         <ListItemIcon>
