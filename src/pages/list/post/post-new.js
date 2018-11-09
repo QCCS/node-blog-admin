@@ -7,7 +7,8 @@ import '../../../styles/pages/list/post/post-new.scss';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import {createPost} from '../../../service/post-api';
-
+import BraftEditor from 'braft-editor';
+import 'braft-editor/dist/index.css'
 const styles = theme => ({
     root: {
         display: 'flex',
@@ -29,6 +30,7 @@ class PostList extends React.Component {
     constructor() {
         super();
         this.state = {
+            editorState: BraftEditor.createEditorState(null),
             title: 'recents',
             desc: 'Cat in the Hat',
             content: 'Cat in the Hat',
@@ -54,6 +56,7 @@ class PostList extends React.Component {
             title: this.state.title,
             desc: this.state.desc,
             content: this.state.content,
+            md_content: this.state.editorState.toHTML(),
             is_delete: 1,
             is_draft: 1,
         }
@@ -63,6 +66,17 @@ class PostList extends React.Component {
             })
 
     }
+    handleEditorChange = (editorState) => {
+        this.setState({ editorState })
+    }
+
+    submitContent = () => {
+        // 在编辑器获得焦点时按下ctrl+s会执行此方法
+        // 编辑器内容提交到服务端之前，可直接调用editorState.toHTML()来获取HTML格式的内容
+        const htmlContent = this.state.editorState.toHTML();
+        console.log(htmlContent)
+    }
+
     render = () => {
         return (<div className="post-list-wrap">
             <h2>创建博客</h2>
@@ -93,6 +107,14 @@ class PostList extends React.Component {
                 variant="outlined"
             />
             <br/>
+            <div className="editor-wrap">
+                <BraftEditor
+                    value={this.state.editorState}
+                    onChange={this.handleEditorChange}
+                    onSave={this.submitContent}
+                />
+            </div>
+
             <Button
                 className="new-post-save-btn"
                 variant="contained"
