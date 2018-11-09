@@ -206,8 +206,7 @@ class LeftMiddleRight extends React.Component {
         const {classes} = this.props;
         return ( <div className='left-middle-right-wrap'>
 
-            {/*//需要设置一个全局变量，监听窗口变化，设置样式，变量考虑放context*/}
-            <div className='left' style={{'height':document.getElementById('body').offsetHeight-102}}>
+            <div className='left'>
                 <List component="nav">
                     <ListItem button component={link}>
                         <ListItemText inset primary="后台管理系统"/>
@@ -220,7 +219,7 @@ class LeftMiddleRight extends React.Component {
                     </ListItem>
                 </List>
             </div>
-            <div className='right' style={{'height':document.getElementById('body').offsetHeight-102}}>
+            <div className='right'>
                 <h1>{this.props.right}</h1>
                 <h1>{this.props.text}</h1>
                 <h1 className="request-res">请求完毕显示：{this.props.getPost}</h1>
