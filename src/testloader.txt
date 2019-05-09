@@ -1,0 +1,4 @@
+console.log('testloader')
+var a = {
+name:"json-text"
+}
