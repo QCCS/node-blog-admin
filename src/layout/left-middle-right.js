@@ -16,7 +16,7 @@ import appContextTwo from '../context-data/app-context-two';
 import actions from '../redux/action';
 import '../styles/layout/left-middle-right.css';
 import '../styles/index.scss';
-
+import {Spring, animated, interpolate} from 'react-spring/renderprops';
 // import ReactMarkdown from 'react-markdown';
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -35,7 +35,10 @@ import Divider from '@material-ui/core/Divider';
 import post1 from './readme.md';
 import post2 from './readme.md';
 import post3 from '../../README.md';
+
+
 const styles = theme => ({
+
     layout: {
         width: 'auto',
         marginLeft: theme.spacing.unit * 3,
@@ -207,6 +210,17 @@ class LeftMiddleRight extends React.Component {
         return ( <div className='left-middle-right-wrap'>
 
             <div className='left'>
+                <Spring
+                    from={{ number: 0 }}
+                    to={{ number: 1 }}>
+                    {props => <div>{props.number}</div>}
+                </Spring>
+                <Spring
+                    from={{ opacity: 0 }}
+                    to={{ opacity: 1 }}>
+                    {props => <div style={props}>hello</div>}
+                </Spring>
+                aa
                 <List component="nav">
                     <ListItem button component={link}>
                         <ListItemText inset primary="后台管理系统"/>
@@ -231,6 +245,10 @@ class LeftMiddleRight extends React.Component {
 
 
             <div className='center'>
+
+
+
+
                 <React.Fragment>
                     <CssBaseline />
                     <div className={classes.layout}>
@@ -399,6 +417,7 @@ LeftMiddleRight.propTypes = {
     onButtonClick: PropTypes.any,
     onAjaxButtonClick: PropTypes.any,
     getPost: PropTypes.any,
+    classes:PropTypes.any
 };
 LeftMiddleRight.contextTypes = {
     router: PropTypes.object,

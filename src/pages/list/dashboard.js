@@ -5,7 +5,7 @@ import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import '../../styles/pages/list/dashboard.scss';
 import ReactEcharts from 'echarts-for-react';
-
+import NativeSpringExample from '../../components/components-test/spring-test'
 require("echarts/map/js/china.js");
 const styles = theme => ({
     root: {
@@ -730,6 +730,7 @@ class Dashboard extends React.Component {
     render = () => {
 
         return (<div className="dashboard-wrap">
+            <NativeSpringExample></NativeSpringExample>
             <div className="g2">
                 <ReactEcharts option={this.getOption()}/>
             </div>
